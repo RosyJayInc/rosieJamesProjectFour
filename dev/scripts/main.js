@@ -8,12 +8,15 @@ app.searchManager;
 
 app.determineResults =(results) =>{
 
+    console.log(results)
+
     let resultString = "";
 
     if (results > 450) {
         resultString = $(`<p>${results} : Severe </p>`);
     }
     else if(results > 350){
+        resultString = $(`<p>${results} : Extremely high </p>`);
     }
     else if(results > 250){
         resultString = $(`<p>${results} : High </p>`);
@@ -34,18 +37,15 @@ app.determineResults =(results) =>{
     $(".textResults").append(resultString);
 }
 
-app.getMap = function(query) {
+app.getMap = function() {
     let navigationBarMode = Microsoft.Maps.NavigationBarMode;
     app.map = new Microsoft.Maps.Map("#resultMap", {
         credentials: app.apiKey,
         center: new Microsoft.Maps.Location(43.6482, -79.39782),
         mapTypeId: Microsoft.Maps.MapTypeId.road,
-        navigationBarMode: navigationBarMode.compact,
+        navigationBarMode: navigationBarMode.minified,
         zoom: 12
     });
-
-    app.geocodeQuery (`${query}${app.cityAndCountry}`);
-    //call geocode query here
 }
 
 app.geocodeQuery = function(query) {
@@ -121,26 +121,25 @@ app.getCrimeData = function(locationX, locationY) {
             where: "Occurrence_Year > 2016"
         }
     }).then((res)=>{
+        console.log(res)
         let results = res.features.length;
-
         app.determineResults(results);
     });
 
 }
 
 
-
-
 app.submitQuery = function() {
     $(".addressQuery").on("submit", function(e){
         e.preventDefault();
         let addressString = $(".queryText").val().trim();
-        app.getMap(addressString);
+        app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
     });
 }
 
 
 app.init = function() {
+    app.getMap();
     app.submitQuery();
 }
 
