@@ -6,35 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="public/styles/style.css">
-
-    <style>
-
-        #resultMap {
-            width: 500px;
-            border: solid 2px red;
-        }
-
-    </style>
 </head>
 <body>
 
-    <h1>this is a test</h1>
+    <header>
+        <h1>some title!!</h1>
+        <h2>some subtitle goes here</h2>
+    </header>
 
-    <div id="resultMap">
-    </div>
-
-    <form action="" class="addressQuery">
-        <input type="text" class="queryText">
-        <input type="submit">
-    </form>
-
-    <div class="textResults">
+    <main>
         
-    </div>
+        <div id="resultMap">
+        </div>
+        
+        <form action="" class="addressQuery">
+            <input type="text" class="queryText">
+            <input type="submit">
+        </form>
+        
+        <div class="textResults">
+        
+        </div>
+        <button class="findSafe">Find Safe Area</button>
+        <div id="directions">
+        
+        </div>
+
+    </main>
+
+    <footer>
+        <p>copyright stuff</p>
+    </footer>
+
+    
     
 
     <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' defer></script>
-
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
     <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
 
     <script src="public/scripts/main.js"></script>
