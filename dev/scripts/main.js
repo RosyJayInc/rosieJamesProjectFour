@@ -18,8 +18,8 @@ app.config = {
     storageBucket: "rosiejamesprojectfour.appspot.com",
     messagingSenderId: "360785100105"
 };
-firebase.initializeApp(app.config);
 
+firebase.initializeApp(app.config);
 
 app.dbRef = firebase.database().ref("project4SafeAreas");
 
@@ -28,9 +28,6 @@ app.dbChanges = function(result = "empty"){
         app.dbRef.on("value", function(snapshot){
             let doesExist = false;
             let safeAreas = snapshot.val();
-            // console.log(safeAreas);
-            // console.log(result.formattedAddress);
-            
             
             for(let area in safeAreas){
                 if(safeAreas[area].address === result.address.formattedAddress){
@@ -58,46 +55,44 @@ app.dbChanges = function(result = "empty"){
 
 app.determineResults = (addressData, results) =>{
     
-    
     let resultString = "";
 
     if (results > 450) {
-        resultString = $(`<p>${results} : Severe </p>`);
+        resultString = $(`<h3>Severe</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
     }
     else if(results > 350){
-        resultString = $(`<p>${results} : Extremely high </p>`);
+        resultString = $(`<h3>Extremely high</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
         app.findSafeArea(addressData);
     }
     else if(results > 250){
-        resultString = $(`<p>${results} : High </p>`);
+        resultString = $(`<h3>High</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
     }
     else if(results > 150){
-        resultString = $(`<p>${results} : Moderate</p>`);
+        resultString = $(`<h3>Moderate</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
         app.dbChanges(addressData);
     }
     else if(results > 50){
-        resultString = $(`<p>${results} : Low </p>`);
+        resultString = $(`<h3>Low</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
         app.dbChanges(addressData);
     }
     else if(results >= 0 ){
-        resultString = $(`<p>${results} : Negligible</p>`);
+        resultString = $(`<h3>Negligible</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
         app.dbChanges(addressData);
     }
     else{
         resultString = $(`No results Found, Try Again`);
     }
     
-    $(".textResults").append(resultString);
-    // console.log('getting results');
+    $(".textResults").empty().append(resultString);
 }
 
 app.findSafeArea = function(unsafeAddress) {
-    console.log(app.dbRef);
+    // console.log(app.dbRef);
 
     let curLat = unsafeAddress.location.latitude;
     let curLon = unsafeAddress.location.longitude;
 
-    console.log(curLat, curLon);
+    // console.log(curLat, curLon);
     
     let rangeVal = 0.02;
 
@@ -117,7 +112,7 @@ app.findSafeArea = function(unsafeAddress) {
             }
         }
         if(isNear === true){
-            console.log(closeAreas);
+            // console.log(closeAreas);
             
             let ranSpot = Math.floor(Math.random() * closeAreas.length);
             console.log(closeAreas[ranSpot]);
@@ -129,8 +124,7 @@ app.findSafeArea = function(unsafeAddress) {
     });
 }
 app.getDirections = function(unsafe, safe){
-    console.log('test');
-    console.log(unsafe.address.formattedAddress, safe.address);
+    // console.log(unsafe.address.formattedAddress, safe.address);
     let unsafeString = unsafe.address.formattedAddress;
     let safeString = safe.address;
     let safeLat = safe.lat;
@@ -155,7 +149,6 @@ app.getDirections = function(unsafe, safe){
 
         //Specify the element in which the itinerary will be rendered.
         app.directionsManager.setRenderOptions({ itineraryContainer: '#directions' });
-        console.log(app.pin.getLocation());
         app.map.entities.remove(app.pin);
         //Calculate directions.
         app.directionsManager.calculateDirections();
@@ -241,7 +234,6 @@ app.geocodeQuery = function(query) {
             callback: function(r) {
                 // get the results from the geocoding function 
                 if (r && r.results && r.results.length > 0) {
-                    console.log(r.results);
                     let firstResult = r.results[0]
                     
                     app.pin = new Microsoft.Maps.Pushpin(firstResult.location,{
@@ -269,7 +261,6 @@ app.geocodeQuery = function(query) {
 
 
 app.getCrimeData = function(addressData) {
-    console.log("getting crime data");
 
     const url = "https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/Bicycle_Thefts/FeatureServer/0/query?";
 
@@ -307,6 +298,7 @@ app.submitQuery = function() {
         e.preventDefault();
         let addressString = $(".queryText").val().trim();
         app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
+        $("#resultMap").removeClass("resultMapHidden").addClass("resultMapDisplay");
     });
 }
 

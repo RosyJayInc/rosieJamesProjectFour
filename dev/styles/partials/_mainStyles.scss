@@ -3,11 +3,80 @@ body {
     padding: 0;
 }
 
-#resultMap {
+.wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+main {
+    padding: 50px 0;
+}
+
+// HEADER
+
+header {
+    height: 150px;
+    background-color: gainsboro;
+}
+
+h1 {
+    margin: 0;
+}
+
+// BUTTONS AND FORMS
+
+.addressQuery {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.queryText,
+.querySubmit {
+    flex-basis: 100%;
+    padding: 15px;
+}
+
+.querySubmit {
+    background-color: pink;
+    border: 0;
+    border: solid 1px black;
+}
+
+// MAP
+
+
+.resultMapHidden {
+    width: 1px;
+    height: 1px;
+}
+
+.resultMapDisplay {
     width: 500px;
     height: 500px;
     border: solid 2px red;
 }
+
+// RESULTS
+
+.results {
+    width: 500px;
+    padding: 50px 0;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.textResults {
+    width: 100%;
+}
+
+
+
+// FOOTER
 
 footer {
     height: 100px;
