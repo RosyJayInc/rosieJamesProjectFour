@@ -7,6 +7,7 @@ app.map;
 app.pin;
 app.searchManager;
 app.directionsManager;
+app.points;
 
 // Initialize Firebase
 app.config = {
@@ -17,8 +18,8 @@ app.config = {
     storageBucket: "rosiejamesprojectfour.appspot.com",
     messagingSenderId: "360785100105"
 };
-firebase.initializeApp(app.config);
 
+firebase.initializeApp(app.config);
 
 app.dbRef = firebase.database().ref("project4SafeAreas");
 
@@ -27,9 +28,6 @@ app.dbChanges = function(result = "empty"){
         app.dbRef.on("value", function(snapshot){
             let doesExist = false;
             let safeAreas = snapshot.val();
-            // console.log(safeAreas);
-            // console.log(result.formattedAddress);
-            
             
             for(let area in safeAreas){
                 if(safeAreas[area].address === result.address.formattedAddress){
@@ -54,48 +52,67 @@ app.dbChanges = function(result = "empty"){
         
     }
 }
+
 app.determineResults = (addressData, results) =>{
-    
     
     let resultString = "";
 
+    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safer Area</button><button class="anotherQuery">Test Another Address</button></div>`)
+
+    let resultMonth = (results/12).toFixed(2);
+
     if (results > 450) {
-        resultString = $(`<p>${results} : Severe </p>`);
+        resultString = $(`<h3>Severe</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 350){
-        resultString = $(`<p>${results} : Extremely high </p>`);
+        resultString = $(`<h3>Extremely high</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.findSafeArea(addressData);
     }
     else if(results > 250){
-        resultString = $(`<p>${results} : High </p>`);
+        resultString = $(`<h3>High</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 150){
-        resultString = $(`<p>${results} : Moderate</p>`);
+        resultString = $(`<h3>Moderate</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results > 50){
-        resultString = $(`<p>${results} : Low </p>`);
+        resultString = $(`<h3>Low</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results >= 0 ){
-        resultString = $(`<p>${results} : Negligible</p>`);
+        resultString = $(`<h3>Negligible</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else{
         resultString = $(`No results Found, Try Again`);
     }
     
-    $(".textResults").append(resultString);
-    // console.log('getting results');
+    $(".textResults").empty().append(resultString, resultButtons);
+    
+    $(".anotherQuery").on("click", function () {
+
+        $(".textResults").empty();
+        $("#resultMap").removeClass("resultMapDisplay").addClass("resultMapHidden");
+        $(".resultButtons").empty();
+        $("footer").removeClass("footerDisplay")
+        $(".separatingLine").removeClass("separatingLineDisplay")
+        $(".textResults").removeClass("textResultsHeight")
+
+        $(".results").removeClass("resultsDisplay")
+
+
+        app.map.entities.remove(app.pin);
+    });
+
 }
 
 app.findSafeArea = function(unsafeAddress) {
-    console.log(app.dbRef);
+    // console.log(app.dbRef);
 
     let curLat = unsafeAddress.location.latitude;
     let curLon = unsafeAddress.location.longitude;
 
-    console.log(curLat, curLon);
+    // console.log(curLat, curLon);
     
     let rangeVal = 0.02;
 
@@ -115,7 +132,7 @@ app.findSafeArea = function(unsafeAddress) {
             }
         }
         if(isNear === true){
-            console.log(closeAreas);
+            // console.log(closeAreas);
             
             let ranSpot = Math.floor(Math.random() * closeAreas.length);
             console.log(closeAreas[ranSpot]);
@@ -127,8 +144,7 @@ app.findSafeArea = function(unsafeAddress) {
     });
 }
 app.getDirections = function(unsafe, safe){
-    console.log('test');
-    console.log(unsafe.address.formattedAddress, safe.address);
+    // console.log(unsafe.address.formattedAddress, safe.address);
     let unsafeString = unsafe.address.formattedAddress;
     let safeString = safe.address;
     let safeLat = safe.lat;
@@ -144,8 +160,6 @@ app.getDirections = function(unsafe, safe){
         });
         app.directionsManager.addWaypoint(currentPoint);
         
-        
-        
         let safePoint = new Microsoft.Maps.Directions.Waypoint({
             address: safeString
         });
@@ -153,7 +167,6 @@ app.getDirections = function(unsafe, safe){
 
         //Specify the element in which the itinerary will be rendered.
         app.directionsManager.setRenderOptions({ itineraryContainer: '#directions' });
-        console.log(app.pin.getLocation());
         app.map.entities.remove(app.pin);
         //Calculate directions.
         app.directionsManager.calculateDirections();
@@ -165,12 +178,58 @@ app.getMap = function(query) {
         credentials: app.apiKey,
         center: new Microsoft.Maps.Location(43.6482, -79.39782),
         mapTypeId: Microsoft.Maps.MapTypeId.road,
-        navigationBarMode: navigationBarMode.compact,
+        navigationBarMode: navigationBarMode.minified,
         zoom: 12
     });
 
-    app.geocodeQuery (`${query}${app.cityAndCountry}`);
-    //call geocode query here
+    // defining points of polygon here: boundaries of Toronto
+    app.points = [
+        new Microsoft.Maps.Location(43.584721, -79.541365),
+        new Microsoft.Maps.Location(43.610629, -79.567029),
+        new Microsoft.Maps.Location(43.627276, -79.563436),
+        new Microsoft.Maps.Location(43.625848, -79.575361),
+        new Microsoft.Maps.Location(43.629626, -79.585825),
+
+        new Microsoft.Maps.Location(43.644599, -79.591420),
+        new Microsoft.Maps.Location(43.667592, -79.589045),
+        new Microsoft.Maps.Location(43.743851, -79.648292),
+        new Microsoft.Maps.Location(43.832546, -79.267848),
+        new Microsoft.Maps.Location(43.798602, -79.132959),
+
+        new Microsoft.Maps.Location(43.789980, -79.121711),
+        new Microsoft.Maps.Location(43.667366, -79.103675),
+        new Microsoft.Maps.Location(43.552493, -79.500425),
+        new Microsoft.Maps.Location(43.584721, -79.541365)
+    ]
+
+    let color = new Microsoft.Maps.Color(150, 0, 0, 255)
+    let polygon = new Microsoft.Maps.Polygon(app.points, color);
+    // pushing the polygon into the map
+    app.map.entities.push(polygon);
+}
+
+// function to check if the point is acutally in the polygon
+app.pointInPolygon = function (pin) {
+    let lon = pin.geometry.x;
+    let lat = pin.geometry.y;
+
+    let j = app.points.length - 1;
+    let inPoly = false;
+
+    for (let i = 0; i < app.points.length; i = i + 1) {
+        if (app.points[i].longitude < lon && app.points[j].longitude >= lon || app.points[j].longitude < lon && app.points[i].longitude >= lon) {
+            if (app.points[i].latitude + (lon - app.points[i].longitude) / (app.points[j].longitude - app.points[i].longitude) * (app.points[j].latitude - app.points[i].latitude) < lat) {
+                inPoly = !inPoly;
+            }
+        }
+        j = i;
+    }
+
+    if (inPoly) {
+        app.map.entities.push(pin);
+    } else {
+        alert("This location is outside the boundaries for this data set")
+    }
 }
 
 app.geocodeQuery = function(query) {
@@ -193,7 +252,6 @@ app.geocodeQuery = function(query) {
             callback: function(r) {
                 // get the results from the geocoding function 
                 if (r && r.results && r.results.length > 0) {
-                    console.log(r.results);
                     let firstResult = r.results[0]
                     
                     app.pin = new Microsoft.Maps.Pushpin(firstResult.location,{
@@ -203,7 +261,8 @@ app.geocodeQuery = function(query) {
                     // make the database call here
                     app.getCrimeData(firstResult);
 
-                    app.map.entities.push(app.pin);
+                    // make the call to check if within polygon here
+                    app.pointInPolygon(app.pin);
 
                     app.map.setView({bounds:firstResult.bestView});
                 }
@@ -220,7 +279,6 @@ app.geocodeQuery = function(query) {
 
 
 app.getCrimeData = function(addressData) {
-    console.log("getting crime data");
 
     const url = "https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/Bicycle_Thefts/FeatureServer/0/query?";
 
@@ -246,27 +304,37 @@ app.getCrimeData = function(addressData) {
     }).then((res)=>{
         
         let results = res.features.length;
-
         app.determineResults(addressData, results);
     });
 
 }
 
 
-
-
 app.submitQuery = function() {
     $(".addressQuery").on("submit", function(e){
         e.preventDefault();
         let addressString = $(".queryText").val().trim();
-        //create node on firebase
-        
-        app.getMap(addressString);
+        app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
+
+        $("#resultMap").removeClass("resultMapHidden").addClass("resultMapDisplay");
+
+        $("footer").addClass("footerDisplay");
+
+        $('html, body').animate({
+            scrollTop: $("#footer").offset().top
+        }, 1000);
+
+        $(".separatingLine").addClass("separatingLineDisplay")
+        $(".textResults").addClass("textResultsHeight")
+
+        $(".results").addClass("resultsDisplay")
+
     });
 }
 
 
 app.init = function() {
+    app.getMap();
     app.submitQuery();
     // app.findSafeArea("test");
     app.dbChanges();

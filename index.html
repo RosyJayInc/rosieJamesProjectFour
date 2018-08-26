@@ -5,36 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700,300,400" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
-
-    <style>
-        #resultMap {
-            width: 500px;
-            height: 500px;
-            border: solid 2px red;
-        }
-    </style>
 </head>
 <body>
 
-    <h1>this is a test</h1>
+    <header>
+        <div class="wrapper">      
+            <h1>Toronto Bike Safety</h1>
+        </div>
+    </header>
 
-    <div id="resultMap">
+    <main>
+        <div class="wrapper">
 
-    </div>
 
-    <form action="" class="addressQuery">
-        <input type="text" class="queryText">
-        <input type="submit">
-    </form>
+            <div class="aboutText">
+            </div>
+        
+            <div class="opening">
+                <form action="" class="addressQuery">
+                    <input type="text" class="queryText" placeholder="Enter your address here">
+                    <input type="submit" class="querySubmit">
+                </form>
+            </div>
+            
+        
+            <div class="results">
 
-    <div class="textResults">
+                <div class="textResults">
+                    <!-- <div class="resultButtons">
+                                    </div> -->
+                </div>
 
-    </div>
-    <button class="findSafe">Find Safe Area</button>
-    <div id="directions">
 
-    </div>
+                
+
+                <div class="separatingLine"></div>
+
+                <div id="resultMap" class="resultMapHidden">
+                </div>
+
+                
+            </div>
+
+            
+            <div id="directions">   
+            </div>
+           
+        </div> <!-- wrapper ends -->
+    </main>
+
+    <footer id="footer">
+        <div class="wrapper">
+        </div>
+    </footer>
+
+    
     
 
     <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' defer></script>
