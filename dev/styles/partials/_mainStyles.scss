@@ -7,7 +7,7 @@ body {
 }
 
 .wrapper {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -49,7 +49,7 @@ h2 {
 // OPENING
 
 .opening {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 // BUTTONS AND FORMS
@@ -70,12 +70,21 @@ h2 {
 
 .queryText {
     border: 0;
-    border: solid 1px grey;
+    background-color: #fafcff;
+    border: solid 1px #6a91ab;
 } 
+
 .querySubmit {
-    background-color:#c4d7df;
+    background-color:#6a91ab;
+    color: white;
+    text-transform: uppercase;
     border: 0;
     margin-top: 10px;
+    transition: all 0.3s;
+    &:hover {
+        background-color: tomato;
+        color: white;
+    }
 }
 
 .resultButtons {
@@ -147,7 +156,7 @@ button.anotherQuery {
 }
 
 .separatingLineDisplay {
-    height: 900px;
+    height: 600px;
     background-color: #c4d7df;
     position: relative;
 }
@@ -159,7 +168,7 @@ button.anotherQuery {
     height: 20px;
     position: absolute;
     top: 0;
-    left: -10px;
+    left: -9px;
     border-radius: 50%;
     background-color: #c4d7df;
 }
@@ -211,14 +220,27 @@ button.anotherQuery {
 
 // DIRECTIONS
 
-// .MicrosoftMap {
-//     border: solid 1px red;
-// }
-
 #directions {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+}
+
+.backToResults {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.backToResults button {
+    width: 400px;
+    margin: 50px auto;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    color: white;
+    background-color: tomato;
 }
 // FOOTER
 
@@ -228,3 +250,95 @@ button.anotherQuery {
     background-color: #6a91ab;
 }
 
+// MEDIA QUERIES 
+
+@media (max-width: 945px) {
+    .results {
+        width: 500px;
+    }
+
+    .textResults {
+        width: 100%;
+    }
+
+    .separatingLineDisplay,
+    .separatingLine,
+    .resultsDisplay::after {
+        display: none;
+    }
+
+    .line {
+        width: 1.5px;
+        height: 0px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        transition: height 0.8s;
+        position: relative;
+    }
+
+    .lineDisplay {
+        height: 300px;
+        background-color: #c4d7df;  
+    }
+
+    .lineDisplay::before,
+    .lineDisplay::after {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: -9px;
+        border-radius: 50%;
+        background-color: #c4d7df;
+    }
+
+    .lineDisplay::after {
+        bottom: 0;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .addressQuery {
+        width: 400px;
+    }
+
+    .results {
+        width: 400px;
+    }
+    
+}
+
+@media (max-width: 450px) {
+    .addressQuery {
+        width: 300px;
+    }
+
+    .results {
+        width: 300px;
+    }
+
+    .resultMapDisplay {
+        width: 300px;
+        height: 300px;
+        flex-basis: 300px;
+    }
+
+    .backToResults button {
+        width: 300px;
+    }
+
+    .textResultsHeight {
+        height: 450px;
+    }
+
+    #directions {
+        width: 300px;
+        overflow: hidden;
+    }
+
+
+
+}

@@ -62,25 +62,25 @@ app.determineResults = (addressData, results) => {
     let resultMonth = (results/12).toFixed(2);
 
     if (results > 450) {
-        resultString = $(`<h3>Severe</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">Severe</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 350){
-        resultString = $(`<h3>Extremely high</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">Extremely high</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.findSafeArea(addressData);
     }
     else if(results > 250){
-        resultString = $(`<h3>High</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">High</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 150){
-        resultString = $(`<h3>Moderate</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">Moderate</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results > 50){
-        resultString = $(`<h3>Low</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">Low</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results >= 0 ){
-        resultString = $(`<h3>Negligible</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        resultString = $(`<h3 id="resultNumber">Negligible</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else{
@@ -95,11 +95,17 @@ app.determineResults = (addressData, results) => {
         $("#resultMap").removeClass("resultMapDisplay").addClass("resultMapHidden");
         $(".resultButtons").empty();
         $("footer").removeClass("footerDisplay")
+
+        $(".line").removeClass("lineDisplay");
         $(".separatingLine").removeClass("separatingLineDisplay")
         $(".textResults").removeClass("textResultsHeight")
 
         $(".results").removeClass("resultsDisplay")
+        $("#directions").empty();
 
+        $('html, body').animate({
+            scrollTop: 650
+        }, 1000);
 
         app.map.entities.remove(app.pin);
     });
@@ -138,7 +144,6 @@ app.findSafeArea = function(unsafeAddress) {
             console.log(closeAreas[ranSpot]);
 
             $(".textResults").on("click", ".findSafe", function(){
-                console.log("clicked")
                 app.getDirections(unsafeAddress, closeAreas[ranSpot]);
             })
             
@@ -146,7 +151,6 @@ app.findSafeArea = function(unsafeAddress) {
     });
 }
 app.getDirections = function(unsafe, safe){
-    // console.log(unsafe.address.formattedAddress, safe.address);
     let unsafeString = unsafe.address.formattedAddress;
     let safeString = safe.address;
     let safeLat = safe.lat;
@@ -160,11 +164,13 @@ app.getDirections = function(unsafe, safe){
         let currentPoint = new Microsoft.Maps.Directions.Waypoint({ 
             address: unsafeString 
         });
+
         app.directionsManager.addWaypoint(currentPoint);
         
         let safePoint = new Microsoft.Maps.Directions.Waypoint({
             address: safeString
         });
+
         app.directionsManager.addWaypoint(safePoint);
 
         //Specify the element in which the itinerary will be rendered.
@@ -172,6 +178,13 @@ app.getDirections = function(unsafe, safe){
         app.map.entities.remove(app.pin);
         //Calculate directions.
         app.directionsManager.calculateDirections();
+
+        $("#directions").append("<div class='backToResults'><button class='backButton'>Back To Results</button>")
+        $(".backButton").on("click", function(){
+            $('html, body').animate({
+                scrollTop: 650
+            }, 1000);
+        })
     });
 }
 app.getMap = function(query) {
@@ -204,8 +217,9 @@ app.getMap = function(query) {
         new Microsoft.Maps.Location(43.584721, -79.541365)
     ]
 
-    let color = new Microsoft.Maps.Color(150, 0, 0, 255)
-    let polygon = new Microsoft.Maps.Polygon(app.points, color);
+
+    let polygon = new Microsoft.Maps.Polygon(app.points).setOptions({ fillColor: 'transparent'});
+
     // pushing the polygon into the map
     app.map.entities.push(polygon);
 }
@@ -320,15 +334,19 @@ app.submitQuery = function() {
         let addressString = $(".queryText").val().trim();
         app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
 
+        $(".queryText").val("");
+
         $("#resultMap").removeClass("resultMapHidden").addClass("resultMapDisplay");
 
         $("footer").addClass("footerDisplay");
 
         $('html, body').animate({
-            scrollTop: $("#footer").offset().top
+            scrollTop: 650
         }, 1000);
 
+        $(".line").addClass("lineDisplay")
         $(".separatingLine").addClass("separatingLineDisplay")
+
         $(".textResults").addClass("textResultsHeight")
 
         $(".results").addClass("resultsDisplay")
@@ -340,7 +358,6 @@ app.submitQuery = function() {
 app.init = function() {
     app.getMap();
     app.submitQuery();
-    // app.findSafeArea("test");
     app.dbChanges();
     
 }
