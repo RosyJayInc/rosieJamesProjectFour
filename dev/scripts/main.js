@@ -179,7 +179,7 @@ app.getMap = function(query) {
         center: new Microsoft.Maps.Location(43.6482, -79.39782),
         mapTypeId: Microsoft.Maps.MapTypeId.road,
         navigationBarMode: navigationBarMode.minified,
-        zoom: 18
+        zoom: 12
     });
 
     // defining points of polygon here: boundaries of Toronto
