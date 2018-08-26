@@ -1,7 +1,9 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Nunito', sans-serif;
+    background-color: #fafcff;
+    color: #7d93b2;
 }
 
 .wrapper {
@@ -14,21 +16,21 @@ main {
 }
 
 p {
-    font-size: 2rem;
+    font-size: 1rem;
     line-height: 1.6;
+    letter-spacing: 0.8px;
 }
 
 // HEADER
 
 header {
     padding: 50px 0;
-    background-color: #6a91ab;
 }
 
 h1 {
     margin: 0;
-    font-size: 5rem;
-    color: white;
+    font-size: 3rem;
+    color: #6a91ab;
     text-transform: uppercase;
     text-align: center;
 }
@@ -79,20 +81,28 @@ h2 {
 .resultButtons {
     width: 100%;
     margin-top: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 button.findSafe,
 button.anotherQuery {
-    background-color:#c4d7df;
+    background-color: #fafcff;
     border: 0;
-    width: 100%;
+    border: solid 1px #c4d7df; 
+    border-radius: 12px;
+    flex-basis: 48%;
     padding: 15px;
-    border-radius: 5px;
-}
+    color: inherit;
+    transition: all 0.3s;
+    &:hover {
+        color: white;
+        background-color: #c4d7df;
+    }
+} 
 
-button.anotherQuery {
-    margin-top: 10px;
-}
+
+
 
 // MAP
 
@@ -102,9 +112,11 @@ button.anotherQuery {
 }
 
 .resultMapDisplay {
-    width: 500px;
-    height: 500px;
-    flex-basis: 500px;
+    width: 400px;
+    height: 400px;
+    flex-basis: 400px;
+    margin-top: auto;
+    margin-bottom: 25px;
 }
 
 // RESULTS
@@ -115,41 +127,104 @@ button.anotherQuery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 50px;
 }
+
+.resultsDisplay::after {
+    content: "";
+    height: 1.5px;
+    width: 820px;
+    padding: 0 18px;
+    background-color: #c4d7df;
+}
+
 
 .separatingLine {
     width: 1.5px;
-    height: 500px;
-    background-color: grey;
-    margin: 0 10px;
+    height: 0px;
+    margin: 0 25px;
+    transition: height 0.8s;
+}
+
+.separatingLineDisplay {
+    height: 900px;
+    background-color: #c4d7df;
+    position: relative;
+}
+
+.separatingLineDisplay::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: -10px;
+    border-radius: 50%;
+    background-color: #c4d7df;
 }
 
 .results h3 {
-    border: solid 1px red;
     margin: 0;
-    padding: 0;
+    margin-bottom: 40px;
+    padding: 15px;
+    letter-spacing: 1px;
     width: 100%;
     text-transform: uppercase;
     text-align: center;
+    background-color: #677279;
+    border-radius: 10px;
+    color: white;
 }
 
 .textResults {
-    flex-basis: 500px;
+    flex-basis: 400px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    text-align: center;
+    margin-bottom: 25px;
 }
 
+.resultNumber {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    border: solid 4px tomato;
+    color: tomato;
+    font-size: 2rem;
+    line-height: 2.3;
+    margin: 0 auto;
+}
+
+.highlightMonthly {
+    font-weight: 700;
+    color: tomato;
+}
+
+.textResultsHeight {
+    margin-top: auto;
+    height: 400px;
+}
+
+// DIRECTIONS
+
+// .MicrosoftMap {
+//     border: solid 1px red;
+// }
+
+#directions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 // FOOTER
 
-footer {
-    bottom: 0;
-    height: 50px;
+.footerDisplay{
+    width: 100%;
+    height: 100px;
     background-color: #6a91ab;
 }
 
-.footerFixed {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}

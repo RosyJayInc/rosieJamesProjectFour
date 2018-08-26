@@ -57,28 +57,30 @@ app.determineResults = (addressData, results) =>{
     
     let resultString = "";
 
-    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safe Area</button><button class="anotherQuery">Search another address</button></div>`)
+    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safer Area</button><button class="anotherQuery">Test Another Address</button></div>`)
+
+    let resultMonth = (results/12).toFixed(2);
 
     if (results > 450) {
-        resultString = $(`<h3>Severe</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>Severe</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 350){
-        resultString = $(`<h3>Extremely high</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>Extremely high</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.findSafeArea(addressData);
     }
     else if(results > 250){
-        resultString = $(`<h3>High</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>High</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
     }
     else if(results > 150){
-        resultString = $(`<h3>Moderate</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>Moderate</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results > 50){
-        resultString = $(`<h3>Low</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>Low</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else if(results >= 0 ){
-        resultString = $(`<h3 id="h3">Negligible</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3>Negligible</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
         app.dbChanges(addressData);
     }
     else{
@@ -88,13 +90,18 @@ app.determineResults = (addressData, results) =>{
     $(".textResults").empty().append(resultString, resultButtons);
     
     $(".anotherQuery").on("click", function () {
-        // $('html,body').animate({
-        //     scrollTop: $("header").offset().top
-        // }, 'slow');
+
         $(".textResults").empty();
         $("#resultMap").removeClass("resultMapDisplay").addClass("resultMapHidden");
         $(".resultButtons").empty();
-        $("footer").addClass("footerFixed")
+        $("footer").removeClass("footerDisplay")
+        $(".separatingLine").removeClass("separatingLineDisplay")
+        $(".textResults").removeClass("textResultsHeight")
+
+        $(".results").removeClass("resultsDisplay")
+
+
+        app.map.entities.remove(app.pin);
     });
 
 }
@@ -153,8 +160,6 @@ app.getDirections = function(unsafe, safe){
         });
         app.directionsManager.addWaypoint(currentPoint);
         
-        
-        
         let safePoint = new Microsoft.Maps.Directions.Waypoint({
             address: safeString
         });
@@ -174,7 +179,7 @@ app.getMap = function(query) {
         center: new Microsoft.Maps.Location(43.6482, -79.39782),
         mapTypeId: Microsoft.Maps.MapTypeId.road,
         navigationBarMode: navigationBarMode.minified,
-        zoom: 12
+        zoom: 18
     });
 
     // defining points of polygon here: boundaries of Toronto
@@ -310,11 +315,19 @@ app.submitQuery = function() {
         e.preventDefault();
         let addressString = $(".queryText").val().trim();
         app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
+
         $("#resultMap").removeClass("resultMapHidden").addClass("resultMapDisplay");
-        $('html,body').delay(400).animate({
-            scrollTop: $("footer").offset().top
-        },'slow');
-        $("footer").toggleClass("footerFixed");
+
+        $("footer").addClass("footerDisplay");
+
+        $('html, body').animate({
+            scrollTop: $("#footer").offset().top
+        }, 1000);
+
+        $(".separatingLine").addClass("separatingLineDisplay")
+        $(".textResults").addClass("textResultsHeight")
+
+        $(".results").addClass("resultsDisplay")
 
     });
 }
