@@ -53,7 +53,7 @@ app.dbChanges = function(result = "empty"){
     }
 }
 
-app.determineResults = (addressData, results) =>{
+app.determineResults = (addressData, results) => {
     
     let resultString = "";
 
@@ -136,7 +136,9 @@ app.findSafeArea = function(unsafeAddress) {
             
             let ranSpot = Math.floor(Math.random() * closeAreas.length);
             console.log(closeAreas[ranSpot]);
-            $(".findSafe").on("click", function(){
+
+            $(".textResults").on("click", ".findSafe", function(){
+                console.log("clicked")
                 app.getDirections(unsafeAddress, closeAreas[ranSpot]);
             })
             
