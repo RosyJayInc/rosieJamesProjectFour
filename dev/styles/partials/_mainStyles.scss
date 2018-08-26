@@ -7,7 +7,7 @@ body {
 }
 
 .wrapper {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -23,22 +23,29 @@ p {
 
 // HEADER
 
-header {
-    padding: 50px 0;
-}
-
 h1 {
     margin: 0;
     font-size: 3rem;
     color: #6a91ab;
     text-transform: uppercase;
     text-align: center;
+    font-family: 'Oswald', sans-serif;
+    padding: 50px 0;
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        width: 500px;
+        margin: 0 auto;
+        height: 2px;
+        background-color: #6a91ab;
+    }
 }
 
-h2 {
-    color: white;
+header p {
     text-align: center;
-
+    margin: 0 auto;
+    width: 500px;
 }
 
 // ABOUT TEXT
@@ -49,7 +56,7 @@ h2 {
 // OPENING
 
 .opening {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 // BUTTONS AND FORMS
@@ -70,12 +77,21 @@ h2 {
 
 .queryText {
     border: 0;
-    border: solid 1px grey;
+    background-color: #fafcff;
+    border: solid 1px #6a91ab;
 } 
+
 .querySubmit {
-    background-color:#c4d7df;
+    background-color: tomato;
+    color: white;
+    text-transform: uppercase;
     border: 0;
     margin-top: 10px;
+    transition: all 0.3s;
+    &:hover {
+        background-color: #6a91ab;
+        color: white;
+    }
 }
 
 .resultButtons {
@@ -147,7 +163,7 @@ button.anotherQuery {
 }
 
 .separatingLineDisplay {
-    height: 900px;
+    height: 600px;
     background-color: #c4d7df;
     position: relative;
 }
@@ -159,7 +175,7 @@ button.anotherQuery {
     height: 20px;
     position: absolute;
     top: 0;
-    left: -10px;
+    left: -9px;
     border-radius: 50%;
     background-color: #c4d7df;
 }
@@ -211,20 +227,180 @@ button.anotherQuery {
 
 // DIRECTIONS
 
-// .MicrosoftMap {
-//     border: solid 1px red;
-// }
-
 #directions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.backToResults {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-// FOOTER
 
-.footerDisplay{
-    width: 100%;
-    height: 100px;
-    background-color: #6a91ab;
+.backToResults button {
+    width: 400px;
+    margin: 50px auto;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    color: white;
+    background-color: tomato;
 }
 
+
+// FOOTER
+
+footer {
+    height: 0;
+    overflow: hidden;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.footerDisplay{
+    height: auto;
+    width: 100%;
+    padding: 30px 0 10px 0;
+    background-color: #6a91ab;
+    color: white;
+    text-align: center;
+}
+
+.copyright {
+    padding-top: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+
+// MEDIA QUERIES 
+
+@media (max-width: 945px) {
+    .results {
+        width: 500px;
+    }
+
+    .textResults {
+        width: 100%;
+    }
+
+    .separatingLineDisplay,
+    .separatingLine,
+    .resultsDisplay::after {
+        display: none;
+    }
+
+    .line {
+        width: 1.5px;
+        height: 0px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        transition: height 0.8s;
+        position: relative;
+    }
+
+    .lineDisplay {
+        height: 300px;
+        background-color: #c4d7df;  
+    }
+
+    .lineDisplay::before,
+    .lineDisplay::after {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: -9px;
+        border-radius: 50%;
+        background-color: #c4d7df;
+    }
+
+    .lineDisplay::after {
+        bottom: 0;
+    }
+}
+
+@media (max-width: 560px) {
+
+    h1::before,
+    h1::after {
+        width: 400px;
+    }
+
+    header p {
+        width: 400px;
+    }
+
+    .addressQuery {
+        width: 400px;
+    }
+
+    .results {
+        width: 400px;
+    }
+    
+}
+
+@media (max-width: 450px) {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h1::before,
+    h1::after {
+        width: 300px;
+    }
+
+    header p {
+        width: 300px;
+    }
+
+    .addressQuery {
+        width: 300px;
+    }
+
+    .results {
+        width: 300px;
+    }
+
+    .resultMapDisplay {
+        width: 300px;
+        height: 300px;
+        flex-basis: 300px;
+    }
+
+    .backToResults button {
+        width: 300px;
+    }
+
+    .textResultsHeight {
+        height: 450px;
+    }
+
+}
+
+@media (max-width: 350px) {
+    #directions {
+        width: 300px;
+        justify-content: center;
+    }
+
+    .MicrosoftMap.dirSDK .directionsPanel {
+        margin: 0 auto;
+        width: 300px !important;
+    }
+}

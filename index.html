@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:700,300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700,300,400|Oswald:500,700" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 <body>
 
     <header>
         <div class="wrapper">      
-            <h1>Toronto Bike Safety</h1>
+            <h1>Toronto Bike Theft</h1>
+            <p>Get a safety rating for the next place you want to lock up your bike, generated using historical data from the Toronto Police Service</p>
         </div>
     </header>
 
@@ -26,27 +27,24 @@
             <div class="opening">
                 <form action="" class="addressQuery">
                     <input type="text" class="queryText" placeholder="Enter your address here">
-                    <input type="submit" class="querySubmit">
+                    <input type="submit" class="querySubmit" value="get safety rating">
                 </form>
             </div>
+
+            <div class="line"></div>
             
-        
             <div class="results">
 
                 <div class="textResults">
                 </div>
 
-
-                
-
-                <div class="separatingLine"></div>
+                <div class="separatingLine"></div>  
 
                 <div id="resultMap" class="resultMapHidden">
+                    <div id="scrollTo"></div>
                 </div>
-
                 
             </div>
-
             
             <div id="directions">   
             </div>
@@ -56,11 +54,12 @@
 
     <footer id="footer">
         <div class="wrapper">
+            <p>Help protect your bike by registering it <a href="https://bike.torontopolice.on.ca/BicycleRegistry/">here.</a></p> 
+            <p>Was your bike stolen? Report it <a href="https://www.torontopolice.on.ca/core/theft_under.php">here</a> and help expand the data</p> 
+            <p class="copyright">&#169 2018 James MacDonald and Rosie Elphick</p>
         </div>
     </footer>
 
-    
-    
 
     <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' defer></script>
     <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
