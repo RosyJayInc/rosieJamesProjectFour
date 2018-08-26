@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .wrapper {
@@ -12,15 +13,41 @@ main {
     padding: 50px 0;
 }
 
+p {
+    font-size: 2rem;
+    line-height: 1.6;
+}
+
 // HEADER
 
 header {
-    height: 150px;
-    background-color: gainsboro;
+    padding: 50px 0;
+    background-color: #6a91ab;
 }
 
 h1 {
     margin: 0;
+    font-size: 5rem;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+
+}
+
+// ABOUT TEXT
+
+.aboutText p {
+    text-align: center;
+}
+// OPENING
+
+.opening {
+    padding: 100px 0;
 }
 
 // BUTTONS AND FORMS
@@ -36,16 +63,38 @@ h1 {
 .querySubmit {
     flex-basis: 100%;
     padding: 15px;
+    border-radius: 5px;
 }
 
-.querySubmit {
-    background-color: pink;
+.queryText {
     border: 0;
-    border: solid 1px black;
+    border: solid 1px grey;
+} 
+.querySubmit {
+    background-color:#c4d7df;
+    border: 0;
+    margin-top: 10px;
+}
+
+.resultButtons {
+    width: 100%;
+    margin-top: auto;
+}
+
+button.findSafe,
+button.anotherQuery {
+    background-color:#c4d7df;
+    border: 0;
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+button.anotherQuery {
+    margin-top: 10px;
 }
 
 // MAP
-
 
 .resultMapHidden {
     width: 1px;
@@ -55,30 +104,52 @@ h1 {
 .resultMapDisplay {
     width: 500px;
     height: 500px;
-    border: solid 2px red;
+    flex-basis: 500px;
 }
 
 // RESULTS
 
 .results {
-    width: 500px;
-    padding: 50px 0;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+}
+
+.separatingLine {
+    width: 1.5px;
+    height: 500px;
+    background-color: grey;
+    margin: 0 10px;
+}
+
+.results h3 {
+    border: solid 1px red;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .textResults {
-    width: 100%;
+    flex-basis: 500px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
-
-
 
 // FOOTER
 
 footer {
-    height: 100px;
-    background-color: gainsboro;
+    bottom: 0;
+    height: 50px;
+    background-color: #6a91ab;
+}
+
+.footerFixed {
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }

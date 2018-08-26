@@ -57,6 +57,8 @@ app.determineResults = (addressData, results) =>{
     
     let resultString = "";
 
+    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safe Area</button><button class="anotherQuery">Search another address</button></div>`)
+
     if (results > 450) {
         resultString = $(`<h3>Severe</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
     }
@@ -76,14 +78,25 @@ app.determineResults = (addressData, results) =>{
         app.dbChanges(addressData);
     }
     else if(results >= 0 ){
-        resultString = $(`<h3>Negligible</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
+        resultString = $(`<h3 id="h3">Negligible</h3><p>In 2017, there were ${results} reported bike thefts within a 1km radius of ${addressData.address.addressLine}</p>`);
         app.dbChanges(addressData);
     }
     else{
         resultString = $(`No results Found, Try Again`);
     }
     
-    $(".textResults").empty().append(resultString);
+    $(".textResults").empty().append(resultString, resultButtons);
+    
+    $(".anotherQuery").on("click", function () {
+        // $('html,body').animate({
+        //     scrollTop: $("header").offset().top
+        // }, 'slow');
+        $(".textResults").empty();
+        $("#resultMap").removeClass("resultMapDisplay").addClass("resultMapHidden");
+        $(".resultButtons").empty();
+        $("footer").addClass("footerFixed")
+    });
+
 }
 
 app.findSafeArea = function(unsafeAddress) {
@@ -286,7 +299,6 @@ app.getCrimeData = function(addressData) {
     }).then((res)=>{
         
         let results = res.features.length;
-
         app.determineResults(addressData, results);
     });
 
@@ -299,6 +311,11 @@ app.submitQuery = function() {
         let addressString = $(".queryText").val().trim();
         app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
         $("#resultMap").removeClass("resultMapHidden").addClass("resultMapDisplay");
+        $('html,body').delay(400).animate({
+            scrollTop: $("footer").offset().top
+        },'slow');
+        $("footer").toggleClass("footerFixed");
+
     });
 }
 

@@ -5,48 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 <body>
 
     <header>
         <div class="wrapper">      
-            <h1>some title!!</h1>
-            <h2>some subtitle goes here</h2>
+            <h1>Toronto Bike Safety</h1>
         </div>
     </header>
 
     <main>
         <div class="wrapper">
 
+
             <div class="aboutText">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quod officiis? Ducimus error ab porro harum aspernatur dicta facere aperiam aut itaque, esse praesentium iste, eveniet, dignissimos sit quasi quod labore veniam maxime incidunt tempore necessitatibus alias molestiae cupiditate? Perspiciatis!</p>
+                <p>Gather a bike theft safety rating</p>
             </div>
         
-            <form action="" class="addressQuery">
-                <input type="text" class="queryText">
-                <input type="submit" class="querySubmit">
-            </form>
+            <div class="opening">
+                <form action="" class="addressQuery">
+                    <input type="text" class="queryText" placeholder="Enter your address here">
+                    <input type="submit" class="querySubmit">
+                </form>
+            </div>
             
         
             <div class="results">
-                <div class="textResults">
-                </div>
+
+                
 
                 <div id="resultMap" class="resultMapHidden">
                 </div>
-                 
+
+                <div class="separatingLine"></div>
+
+                <div class="textResults">
+                    <!-- <div class="resultButtons">
+                    </div> -->
+                </div>
+
+                
             </div>
 
-            <button class="findSafe">Find Safe Area</button>
-            <div id="directions">
-                
+            
+            <div id="directions">   
             </div>
            
         </div> <!-- wrapper ends -->
     </main>
 
-    <footer>
+    <footer class="footerFixed">
         <div class="wrapper">
             <p>copyright stuff</p>
         </div>
