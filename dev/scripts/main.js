@@ -252,6 +252,7 @@ app.geocodeQuery = function(query) {
             callback: function(r) {
                 // get the results from the geocoding function 
                 if (r && r.results && r.results.length > 0) {
+                    
                     let firstResult = r.results[0]
                     
                     app.pin = new Microsoft.Maps.Pushpin(firstResult.location,{
@@ -263,8 +264,9 @@ app.geocodeQuery = function(query) {
 
                     // make the call to check if within polygon here
                     app.pointInPolygon(app.pin);
+                    
 
-                    app.map.setView({bounds:firstResult.bestView});
+                    app.map.setView({center:firstResult.location});
                 }
             },
             errorCallback: function() {
