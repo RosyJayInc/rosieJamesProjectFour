@@ -107,13 +107,18 @@ button.anotherQuery {
     border: 0;
     border: solid 1px #c4d7df; 
     border-radius: 12px;
-    flex-basis: 48%;
+    flex: 1 0 48%;
+    margin-left: 5px;
+    margin-right: 5px;
     padding: 15px;
     color: inherit;
     transition: all 0.3s;
     &:hover {
         color: white;
         background-color: #c4d7df;
+    }
+    &.noNearbySafe{
+        display: none;
     }
 } 
 
@@ -297,7 +302,7 @@ footer a {
 
     .separatingLineDisplay,
     .separatingLine,
-    .resultsDisplay::after {
+    .resultsDisplay::after{
         display: none;
     }
 
