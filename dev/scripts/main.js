@@ -91,6 +91,10 @@ app.determineResults = (addressData, results) => {
     
     $(".textResults").empty().append(resultString, resultButtons);
     
+    if (results <= 150) {
+        $(".resultButtons .findSafe").addClass("noNearbySafe");
+    }
+    
     $(".anotherQuery").on("click", function () {
 
         $(".textResults").empty();
@@ -151,9 +155,7 @@ app.findSafeArea = function(unsafeAddress) {
             })
             
         }
-        else{
-            console.log('Testy mcTestface');
-            
+        else{            
             $(".resultButtons .findSafe").addClass("noNearbySafe");
         }
     });
