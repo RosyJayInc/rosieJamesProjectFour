@@ -63,6 +63,7 @@ app.determineResults = (addressData, results) => {
 
     if (results > 450) {
         resultString = $(`<h3 id="resultNumber">Severe</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        app.findSafeArea(addressData);
     }
     else if(results > 350){
         resultString = $(`<h3 id="resultNumber">Extremely high</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
@@ -70,6 +71,7 @@ app.determineResults = (addressData, results) => {
     }
     else if(results > 250){
         resultString = $(`<h3 id="resultNumber">High</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
+        app.findSafeArea(addressData);
     }
     else if(results > 150){
         resultString = $(`<h3 id="resultNumber">Moderate</h3><p class="resultNumber">${results}</p> <p>reported bike thefts within a 1km radius of ${addressData.address.addressLine} in 2017.</p> <p>That is an average of approximately <span class="highlightMonthly">${resultMonth} </span>thefts a month.</p>`);
@@ -143,10 +145,16 @@ app.findSafeArea = function(unsafeAddress) {
             let ranSpot = Math.floor(Math.random() * closeAreas.length);
             console.log(closeAreas[ranSpot]);
 
+            $(".resultButtons .findSafe").removeClass("noNearbySafe");
             $(".textResults").on("click", ".findSafe", function(){
                 app.getDirections(unsafeAddress, closeAreas[ranSpot]);
             })
             
+        }
+        else{
+            console.log('Testy mcTestface');
+            
+            $(".resultButtons .findSafe").addClass("noNearbySafe");
         }
     });
 }
