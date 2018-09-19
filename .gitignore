@@ -1,4 +1,5 @@
 node_modules
-
+public/styles/style.css
+public/scripts/main.js
 jamesMapping.html
 bingMapping.html
