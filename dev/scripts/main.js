@@ -1,4 +1,3 @@
-
 const app = {};
 
 app.apiKey = "Aps9Ru4I2VE16SVT-Uqa1m0_dnEV3AI15tq6yOCMbctU6mkJFtcs4CQiiet2bJvX";
@@ -57,7 +56,7 @@ app.determineResults = (addressData, results) => {
     
     let resultString = "";
 
-    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safer Area</button><button class="anotherQuery">Test Another Address</button></div>`)
+    let resultButtons = $(`<div class="resultButtons"><button class="findSafe">Find Safer Area</button><button class="anotherQuery" onClick="window.location.href=window.location.href">Test Another Address</button></div>`)
 
     let resultMonth = (results/12).toFixed(2);
 
@@ -113,6 +112,18 @@ app.determineResults = (addressData, results) => {
             scrollTop: 650
         }, 1000);
 
+        console.log(app.map)
+
+        // let navigationBarMode = Microsoft.Maps.NavigationBarMode;
+
+        // app.map = new Microsoft.Maps.Map("#resultMap", {
+        //     credentials: app.apiKey,
+        //     center: new Microsoft.Maps.Location(43.6482, -79.39782),
+        //     mapTypeId: Microsoft.Maps.MapTypeId.road,
+        //     navigationBarMode: navigationBarMode.minified,
+        //     zoom: 12
+        // });
+
         app.map.entities.remove(app.pin);
     });
 
@@ -161,6 +172,7 @@ app.findSafeArea = function(unsafeAddress) {
     });
 }
 app.getDirections = function(unsafe, safe){
+
     let unsafeString = unsafe.address.formattedAddress;
     let safeString = safe.address;
     let safeLat = safe.lat;
@@ -185,6 +197,7 @@ app.getDirections = function(unsafe, safe){
 
         //Specify the element in which the itinerary will be rendered.
         app.directionsManager.setRenderOptions({ itineraryContainer: '#directions' });
+        console.log(app.map)
         app.map.entities.remove(app.pin);
         //Calculate directions.
         app.directionsManager.calculateDirections();
@@ -197,45 +210,10 @@ app.getDirections = function(unsafe, safe){
         })
     });
 }
-app.getMap = function(query) {
-    let navigationBarMode = Microsoft.Maps.NavigationBarMode;
-    app.map = new Microsoft.Maps.Map("#resultMap", {
-        credentials: app.apiKey,
-        center: new Microsoft.Maps.Location(43.6482, -79.39782),
-        mapTypeId: Microsoft.Maps.MapTypeId.road,
-        navigationBarMode: navigationBarMode.minified,
-        zoom: 12
-    });
-
-    // defining points of polygon here: boundaries of Toronto
-    app.points = [
-        new Microsoft.Maps.Location(43.584721, -79.541365),
-        new Microsoft.Maps.Location(43.610629, -79.567029),
-        new Microsoft.Maps.Location(43.627276, -79.563436),
-        new Microsoft.Maps.Location(43.625848, -79.575361),
-        new Microsoft.Maps.Location(43.629626, -79.585825),
-
-        new Microsoft.Maps.Location(43.644599, -79.591420),
-        new Microsoft.Maps.Location(43.667592, -79.589045),
-        new Microsoft.Maps.Location(43.743851, -79.648292),
-        new Microsoft.Maps.Location(43.832546, -79.267848),
-        new Microsoft.Maps.Location(43.798602, -79.132959),
-
-        new Microsoft.Maps.Location(43.789980, -79.121711),
-        new Microsoft.Maps.Location(43.667366, -79.103675),
-        new Microsoft.Maps.Location(43.552493, -79.500425),
-        new Microsoft.Maps.Location(43.584721, -79.541365)
-    ]
-
-
-    let polygon = new Microsoft.Maps.Polygon(app.points).setOptions({ fillColor: 'transparent'});
-
-    // pushing the polygon into the map
-    app.map.entities.push(polygon);
-}
 
 // function to check if the point is acutally in the polygon
 app.pointInPolygon = function (pin) {
+    console.log("polygon")
     let lon = pin.geometry.x;
     let lat = pin.geometry.y;
 
@@ -268,14 +246,53 @@ app.geocodeQuery = function(query) {
             
     // if the search manager isn't defined yet, create an instance of the search manager class
     if (!app.searchManager) {
+        console.log("if")
+
+        let navigationBarMode = Microsoft.Maps.NavigationBarMode;
+
+        app.map = new Microsoft.Maps.Map("#resultMap", {
+            credentials: "Aps9Ru4I2VE16SVT-Uqa1m0_dnEV3AI15tq6yOCMbctU6mkJFtcs4CQiiet2bJvX",
+            center: new Microsoft.Maps.Location(43.6482, -79.39782),
+            mapTypeId: Microsoft.Maps.MapTypeId.road,
+            navigationBarMode: navigationBarMode.minified,
+            zoom: 12
+        });
+
+        app.points = [
+            new Microsoft.Maps.Location(43.584721, -79.541365),
+            new Microsoft.Maps.Location(43.610629, -79.567029),
+            new Microsoft.Maps.Location(43.627276, -79.563436),
+            new Microsoft.Maps.Location(43.625848, -79.575361),
+            new Microsoft.Maps.Location(43.629626, -79.585825),
+
+            new Microsoft.Maps.Location(43.644599, -79.591420),
+            new Microsoft.Maps.Location(43.667592, -79.589045),
+            new Microsoft.Maps.Location(43.743851, -79.648292),
+            new Microsoft.Maps.Location(43.832546, -79.267848),
+            new Microsoft.Maps.Location(43.798602, -79.132959),
+
+            new Microsoft.Maps.Location(43.789980, -79.121711),
+            new Microsoft.Maps.Location(43.667366, -79.103675),
+            new Microsoft.Maps.Location(43.552493, -79.500425),
+            new Microsoft.Maps.Location(43.584721, -79.541365)
+        ]
+
+
+        let polygon = new Microsoft.Maps.Polygon(app.points).setOptions({ fillColor: 'transparent' });
+
+        // pushing the polygon into the map
+        app.map.entities.push(polygon);
+
         Microsoft.Maps.loadModule("Microsoft.Maps.Search", function() {
             app.searchManager = new Microsoft.Maps.Search.SearchManager(app.map);
             app.geocodeQuery(query);
         })
     } else {
+        console.log("else")
         let searchRequest = {
             where: query,
             callback: function(r) {
+                console.log(r)
                 // get the results from the geocoding function 
                 if (r && r.results && r.results.length > 0) {
                     
@@ -299,6 +316,7 @@ app.geocodeQuery = function(query) {
                 alert("no results found")
             }
         }
+
 
         app.searchManager.geocode(searchRequest);
 
@@ -340,6 +358,7 @@ app.getCrimeData = function(addressData) {
 
 app.submitQuery = function() {
     $(".addressQuery").on("submit", function(e){
+        
         e.preventDefault();
         let addressString = $(".queryText").val().trim();
         app.geocodeQuery(`${addressString}${app.cityAndCountry}`);
@@ -378,7 +397,7 @@ app.infoBox = function() {
 
 
 app.init = function() {
-    app.getMap();
+    // app.getMap();
     app.submitQuery();
     app.dbChanges();
     app.infoBox();

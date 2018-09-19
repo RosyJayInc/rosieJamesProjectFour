@@ -7,9 +7,12 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:700,300,400|Oswald:500,700" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
+
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol'></script>
     <script>
-        function GetMap(){
-        let navigationBarMode = Microsoft.Maps.NavigationBarMode;
+    
+    function GetMap() {
+            let navigationBarMode = Microsoft.Maps.NavigationBarMode;
             let map = new Microsoft.Maps.Map("#resultMap", {
                 credentials: "Aps9Ru4I2VE16SVT-Uqa1m0_dnEV3AI15tq6yOCMbctU6mkJFtcs4CQiiet2bJvX",
                 center: new Microsoft.Maps.Location(43.6482, -79.39782),
@@ -17,6 +20,8 @@
                 navigationBarMode: navigationBarMode.minified,
                 zoom: 12
             });
+
+            console.log(map)
 
             // defining points of polygon here: boundaries of Toronto
             let points = [
@@ -43,10 +48,25 @@
 
             // pushing the polygon into the map
             map.entities.push(polygon);
+
         }
+    
     </script>
+    
+
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+    crossorigin='anonymous'></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script src="public/scripts/main.js"></script>
+
+
+    
+    
+    
+    
+
 </head>
-<body>
+<body onload="GetMap()">
 
     <header>
         <div class="wrapper">      
@@ -108,13 +128,9 @@
             <p class="copyright">&#169 2018 James MacDonald and Rosie Elphick</p>
         </div>
     </footer>
+    
+    
 
-
-    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' defer></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
-    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
-
-    <script src="public/scripts/main.js"></script>
     
 </body>
 </html>
