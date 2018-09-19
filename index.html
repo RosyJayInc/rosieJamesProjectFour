@@ -7,9 +7,12 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:700,300,400|Oswald:500,700" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
+
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol'></script>
     <script>
-        function GetMap(){
-        let navigationBarMode = Microsoft.Maps.NavigationBarMode;
+    
+    function GetMap() {
+            let navigationBarMode = Microsoft.Maps.NavigationBarMode;
             let map = new Microsoft.Maps.Map("#resultMap", {
                 credentials: "Aps9Ru4I2VE16SVT-Uqa1m0_dnEV3AI15tq6yOCMbctU6mkJFtcs4CQiiet2bJvX",
                 center: new Microsoft.Maps.Location(43.6482, -79.39782),
@@ -17,6 +20,8 @@
                 navigationBarMode: navigationBarMode.minified,
                 zoom: 12
             });
+
+            console.log(map)
 
             // defining points of polygon here: boundaries of Toronto
             let points = [
@@ -43,10 +48,25 @@
 
             // pushing the polygon into the map
             map.entities.push(polygon);
+
         }
+    
     </script>
+    
+
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+    crossorigin='anonymous'></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script src="public/scripts/main.js"></script>
+
+
+    
+    
+    
+    
+
 </head>
-<body>
+<body onload="GetMap()">
 
     <header>
         <div class="wrapper">      
@@ -54,6 +74,17 @@
             <p>Get a safety rating for the next place you want to lock up your bike, generated using historical data from the Toronto Police Service</p>
         </div>
     </header>
+
+    <button class="info">?</button>
+
+    <div class="infoBox">
+        <h2>Welcome to Safe Cycle Toronto</h2>
+        <p>To use this app, input the <span class="bold">exact address</span> where you will be locking up your bike, and using the Toronto Police Department's open source crime data, we will give you the number of bikes stolen within a 1km radius of this address in 2017.</p>
+        <p>Across Toronto, these numbers range between 0 and approximately 600 so we have provided a relative safety rating based on this range.</p>
+        <p>We want to make it safer to park your bike, so inputted address are all stored to a database. If a user has entered a "safe" area within 5km of your "unsafe" area, an option will be provided to get directions to this safer area.</p>
+        <p>Happy biking!</p>
+        <button class="close">x</button>
+    </div>
 
     <main>
         <div class="wrapper">
@@ -97,13 +128,9 @@
             <p class="copyright">&#169 2018 James MacDonald and Rosie Elphick</p>
         </div>
     </footer>
+    
+    
 
-
-    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' defer></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
-    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
-
-    <script src="public/scripts/main.js"></script>
     
 </body>
 </html>
