@@ -157,7 +157,8 @@ h1 {
   text-transform: uppercase;
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  padding: 50px 0; }
+  padding: 50px 0;
+  text-shadow: black 0px 1px 0px; }
   h1::before, h1::after {
     content: "";
     display: block;
@@ -363,6 +364,51 @@ footer a {
   padding-top: 15px;
   text-transform: uppercase;
   font-weight: 700; }
+
+.info,
+.close {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: inherit;
+  border: 0;
+  font-family: 'Nunito', sans-serif;
+  color: tomato;
+  font-size: 1.4rem;
+  border: solid 2px tomato;
+  line-height: 0.9;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; }
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  line-height: 0.3;
+  font-size: 1.9rem;
+  padding-bottom: 5px; }
+
+.bold {
+  font-weight: 700; }
+
+.infoBox {
+  position: fixed;
+  max-height: 600px;
+  width: 80%;
+  background-color: white;
+  box-shadow: grey 0px 0px 20px 0px, black 0px 0px 2px 0px;
+  border-radius: 5px;
+  top: 20px;
+  left: 10%;
+  display: none;
+  z-index: 100;
+  text-align: center;
+  padding: 30px;
+  overflow-x: hidden;
+  overflow-y: scroll; }
 
 @media (max-width: 945px) {
   .results {

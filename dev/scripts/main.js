@@ -364,11 +364,24 @@ app.submitQuery = function() {
     });
 }
 
+app.infoBox = function() {
+    $(".info").on("click", function() {
+        $(".infoBox").css("display", "block")
+        $(this).css("display", "none")
+    })
+
+    $(".close").on("click", function() {
+        $(".infoBox").css("display", "none")
+        $(".info").css("display", "block")
+    })
+}
+
 
 app.init = function() {
     app.getMap();
     app.submitQuery();
     app.dbChanges();
+    app.infoBox();
     
 }
 
